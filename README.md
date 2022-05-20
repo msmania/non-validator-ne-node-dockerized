@@ -5,7 +5,7 @@
 2. Clone this repo:
 
     ```bash
-    $ git clone https://github.com/xdaichain/non-validator-ne-node-dockerized
+    $ git clone https://github.com/gnosischain/non-validator-ne-node-dockerized
     $ cd non-validator-ne-node-dockerized
     ```
 
