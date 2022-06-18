@@ -5,27 +5,29 @@ services:
     container_name: gc-node
     image: nethermind/nethermind:latest
     environment:
-      NETHERMIND_CONFIG: xdai
+      NETHERMIND_CONFIG: xdai_archive
       NETHERMIND_AURACONFIG_FORCESEALING: "true"
       NETHERMIND_INITCONFIG_ISMINING: "false"
       NETHERMIND_INITCONFIG_STORERECEIPTS: "true"
+      NETHERMIND_JSONRPCCONFIG_ENABLED: "true"
+      NETHERMIND_JSONRPCCONFIG_HOST: "0.0.0.0"
       NETHERMIND_MININGCONFIG_MINGASPRICE: "0"
-      NETHERMIND_TXPOOL_SIZE: 8192
-      NETHERMIND_PRUNINGCONFIG_MODE: "Hybrid"
-      NETHERMIND_PRUNINGCONFIG_CACHEMB: 1024
-      NETHERMIND_SYNCCONFIG_FASTSYNC: "true"
-      NETHERMIND_SYNCCONFIG_FASTBLOCKS: "true"
-      NETHERMIND_SYNCCONFIG_DOWNLOADBODIESINFASTSYNC: "true"
-      NETHERMIND_SYNCCONFIG_DOWNLOADRECEIPTSINFASTSYNC: "true"
+      NETHERMIND_TXPOOLCONFIG_SIZE: 8192
+      NETHERMIND_PRUNINGCONFIG_MODE: "None"
     volumes:
       - ./data/logs:/nethermind/logs
       - ./data/nethermind_db:/nethermind/nethermind_db
     ports:
       - "30303:30303"
       - "30303:30303/udp"
+      - "8845:8545"
     restart: unless-stopped
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "10"
+    ulimits:
+      nofile:
+        soft: 1000000
+        hard: 1000000
