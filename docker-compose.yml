@@ -9,6 +9,8 @@ services:
       NETHERMIND_AURACONFIG_FORCESEALING: "true"
       NETHERMIND_INITCONFIG_ISMINING: "false"
       NETHERMIND_INITCONFIG_STORERECEIPTS: "true"
+      NETHERMIND_JSONRPCCONFIG_ENABLED: "true"
+      NETHERMIND_JSONRPCCONFIG_HOST: "0.0.0.0"
       NETHERMIND_MININGCONFIG_MINGASPRICE: "0"
       NETHERMIND_TXPOOL_SIZE: 8192
       NETHERMIND_PRUNINGCONFIG_MODE: "Hybrid"
@@ -23,9 +25,14 @@ services:
     ports:
       - "30303:30303"
       - "30303:30303/udp"
+      - "8845:8545"
     restart: unless-stopped
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "10"
+    ulimits:
+      nofile:
+        soft: 1000000
+        hard: 1000000
